@@ -5,27 +5,28 @@ A multi-functional Discord bot designed for communities centered around the game
 ## Features
 
 *   **THE FINALS Integration:**
-    *   Player stats lookup (`/gamestats`).
+    *   Player stats lookup (`/gamestats`, `/lookup`).
+    *   Rank checking and comparison (`/rank`, `/rank_compare`, `/ruby`, `/check_ruby`).
     *   Leaderboard tracking.
     *   Automatic rank role assignment based on in-game rank (`/task_rank_roles`).
-    *   Map rotation tracking and prediction embed (`/maprotation`).
-    *   Account linking between Discord and THE FINALS (`/link_setup`, `/force_link`).
+    *   Map rotation tracking and prediction embed (`/maprotation`, `/reportmap`).
+    *   Account linking between Discord and THE FINALS (`/link_setup`, `/force_link`, `/delete_link`, `/checklink`).
 *   **Moderation:**
     *   Timed bans with appeal system (`/ban`, `/unban`).
     *   Warning system with tracking, clearing, and disagreement tickets (`/warn`, `/warnings`, `/clearwarning`).
     *   Message management: pruning, channel locking, slowmode (`/prune`, `/lock`, `/unlock`, `/slowmode`).
     *   Moderator activity point tracking (`/modleaderboard`, `/checkmod`, `/givepoints`).
-    *   Restrict user actions.
+    *   Restrict/unrestrict user actions (`/restrict`, `/unrestrict`).
 *   **Server Management:**
     *   Configurable feature management via `/setup`.
-    *   Welcome channel messages (`/welcomechannel`).
+    *   Welcome channel messages (`/setwelcomechannel`, `/testwelcome`).
     *   Auto-role assignment via reactions/buttons (`/autoassignroles`).
-    *   Professional announcement formatting (`/setannouncementchannel`).
+    *   Professional announcement formatting (`/setannouncementchannel`, `/optout_dms`, `/optin_dms`).
     *   Server logging (integrated into various modules).
 *   **Community & Engagement:**
     *   Support ticket system with categories, transcripts, and feedback (`/ticket`, `/transcripts`).
     *   Twitch "Go Live" notifications and role assignment (`/linktwitch`, `/unlinktwitch`, `/twitchnotificationchannel`).
-    *   Giveaway system (`/giveaway`).
+    *   Giveaway system (`/giveaway`, `/reroll`, `/endgiveaway`).
     *   XP and Leveling system based on messages and voice activity (`/level`, `/leaderboard`, `/give_exp`).
     *   Casino/Gambling games (Blackjack, Crash).
 *   **Utility:**
@@ -96,19 +97,39 @@ The bot uses Discord's slash commands. Here's a summary of key features and thei
 **THE FINALS Integration**
 
 *   `/gamestats`
-    *   View your linked THE FINALS leaderboard statistics. Requires account linking first.
+    *   View *your* linked THE FINALS leaderboard statistics. Requires account linking first.
+*   `/lookup`
+    *   Look up THE FINALS stats for *any* player by their in-game name.
+    *   *Usage:* `/lookup in_game_name:<Name#0000>`
 *   `/rank`
     *   Displays a user's current THE FINALS rank (requires account linking).
+    *   *Usage:* `/rank [user:<@User>]`
+*   `/rank_compare`
+    *   Compares the ranks of two players (requires account linking for both).
+    *   *Usage:* `/rank_compare user1:<@User> user2:<@User>`
+*   `/ruby`
+    *   Check *your* progress towards Ruby rank (top 500) in THE FINALS. Requires account linking.
+*   `/check_ruby`
+    *   Check if *another* player has achieved Ruby rank. Requires account linking for the target user.
+    *   *Usage:* `/check_ruby user:<@User>`
 *   `/task_rank_roles`
-    *   **(Admin)** Manages the automatic assignment of roles based on player ranks fetched from THE FINALS API.
+    *   **(Admin)** Manages the automatic assignment of roles based on player ranks fetched from THE FINALS API. Includes subcommands like `update_now`.
 *   `/maprotation`
-    *   Displays the current predicted map rotation embed. (Setup might be needed via `/maprotation setup`).
+    *   Displays the current predicted map rotation embed. Use `/maprotation setup` (Admin) to configure the embed channel/message.
+*   `/reportmap`
+    *   Report the current map you are playing to help improve rotation predictions.
+    *   *Usage:* `/reportmap map:<MapName>`
 *   `/link_setup`
     *   **(Admin)** Sets up the channel for the account verification/linking embed.
-    *   Users interact with buttons ("Verify", "Delete Link") in the embed posted by this command to link/unlink their Discord account to their THE FINALS in-game name.
+    *   Users interact with buttons (\"Verify\", \"Delete Link\") in the embed posted by this command to link/unlink their Discord account to their THE FINALS in-game name.
 *   `/force_link`
     *   **(Staff)** Manually links a Discord user to a THE FINALS in-game name.
     *   *Usage:* `/force_link user:<@User> in_game_name:<Name#0000>`
+*   `/checklink`
+    *   Checks if you or another user has linked their THE FINALS account.
+    *   *Usage:* `/checklink [user:<@User>]`
+*   `/delete_link`
+    *   **(User Command via Button)** Allows a user to unlink their *own* account via the verification embed message.
 
 ---
 
@@ -133,10 +154,16 @@ The bot uses Discord's slash commands. Here's a summary of key features and thei
     *   **(Admin - Manage Messages)** Deletes a specified number of messages.
     *   *Usage:* `/prune amount:<Number>`
 *   `/lock` / `/unlock`
-    *   **(Admin - Manage Channels)** Locks or unlocks the current channel.
+    *   **(Admin - Manage Channels)** Locks or unlocks the current channel, preventing non-admins from sending messages.
 *   `/slowmode`
     *   **(Admin - Manage Channels)** Sets slowmode in the current channel.
-    *   *Usage:* `/slowmode seconds:<Number>`
+    *   *Usage:* `/slowmode seconds:<Number>` (Use 0 to disable)
+*   `/restrict`
+    *   **(Staff)** Restricts a user from performing certain actions (e.g., using specific commands, reacting). Configuration depends on implementation.
+    *   *Usage:* `/restrict user:<@User> reason:<Text> [duration:<dd:hh:mm>]`
+*   `/unrestrict`
+    *   **(Staff)** Removes restrictions previously applied with `/restrict`.
+    *   *Usage:* `/unrestrict user:<@User>`
 *   `/modleaderboard`
     *   **(Admin)** Shows the moderator activity points leaderboard.
 *   `/checkmod`
@@ -150,12 +177,18 @@ The bot uses Discord's slash commands. Here's a summary of key features and thei
 
 **Server Management**
 
-*   `/welcomechannel`
-    *   **(Admin)** Sets up or manages the channel where welcome messages are sent.
+*   `/setwelcomechannel`
+    *   **(Admin)** Sets the current channel to send welcome messages and images when new members join.
+*   `/testwelcome`
+    *   **(Admin)** Sends a test welcome message to the configured welcome channel.
 *   `/autoassignroles`
     *   **(Admin)** Configures roles that users can self-assign using buttons or reactions attached to a specific message.
 *   `/setannouncementchannel`
     *   **(Admin)** Designates the current channel for the announcement system. Messages sent here by admins can be formatted into embeds and optionally DM'd to users.
+*   `/optout_dms`
+    *   Allows users to opt-out of receiving direct messages from the announcement system.
+*   `/optin_dms`
+    *   Allows users to opt back into receiving direct messages from the announcement system.
 
 ---
 
@@ -166,16 +199,22 @@ The bot uses Discord's slash commands. Here's a summary of key features and thei
 *   `/transcripts`
     *   **(Admin)** Sets the current channel as the destination for ticket transcripts and user feedback.
 *   `/linktwitch`
-    *   Links your Discord account to your Twitch username to enable "Go Live" notifications.
+    *   Links your Discord account to your Twitch username to enable \"Go Live\" notifications.
     *   *Usage:* `/linktwitch twitch_username:<YourTwitchName>`
 *   `/unlinktwitch`
     *   Unlinks your Twitch account.
 *   `/twitchnotificationchannel`
-    *   **(Admin)** Sets the channel where Twitch "Go Live" notifications will be posted.
+    *   **(Admin)** Sets the channel where Twitch \"Go Live\" notifications will be posted.
     *   *Usage:* `/twitchnotificationchannel channel:<#Channel>`
 *   `/giveaway`
     *   **(Admin)** Starts a giveaway.
     *   *Usage:* `/giveaway duration:<Time> winners:<Number> prize:<Text> [channel:<#Channel>] [required_role:<@Role>]`
+*   `/reroll`
+    *   **(Admin)** Rerolls winners for a completed giveaway message.
+    *   *Usage:* `/reroll message_id:<MessageID> [winners:<Number>]`
+*   `/endgiveaway`
+    *   **(Admin)** Ends an active giveaway early.
+    *   *Usage:* `/endgiveaway message_id:<MessageID>`
 *   `/level`
     *   Check your (or another user's) current XP level and progress in the server.
     *   *Usage:* `/level [user:<@User>]`
@@ -185,9 +224,9 @@ The bot uses Discord's slash commands. Here's a summary of key features and thei
     *   **(Admin)** Manually gives XP to a user.
     *   *Usage:* `/give_exp user:<@User> amount:<Number>`
 *   `/blackjack`
-    *   Starts a game of Blackjack (if enabled).
+    *   Starts a game of Blackjack (if enabled). Requires currency/points system integration.
 *   `/crash`
-    *   Starts a game of Crash (if enabled).
+    *   Starts a game of Crash (if enabled). Requires currency/points system integration.
 
 ---
 
@@ -200,8 +239,6 @@ The bot uses Discord's slash commands. Here's a summary of key features and thei
     *   **(Admin)** Sets the current channel to receive message acknowledgment logs from the `/message` command.
 
 ---
-
-
 
 ## Contact
 
