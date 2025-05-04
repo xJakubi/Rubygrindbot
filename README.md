@@ -240,6 +240,60 @@ The bot uses Discord's slash commands. Here's a summary of key features and thei
 
 ---
 
+## Automatic Behaviors & Background Tasks
+
+Beyond the slash commands, the bot performs several actions automatically based on events or schedules:
+
+*   **XP System:**
+    *   **Message XP:** Awards a small amount of XP for messages sent (with a cooldown per user).
+    *   **Voice XP:** Awards XP periodically to users actively participating in voice channels (excluding AFK channels).
+    *   **XP Decay:** Regularly removes a small amount of XP from users who have been inactive (haven't gained XP) for a configured period (e.g., 5 hours), encouraging continued participation.
+    *   **Role Updates:** Automatically assigns or removes level-specific roles based on a user's current XP level whenever their XP changes.
+
+*   **Rank Role Updates:**
+    *   Periodically (e.g., every 30 minutes), the bot fetches the latest rank information for linked users from THE FINALS API and automatically updates their corresponding rank roles in Discord.
+
+*   **Moderator Point Tracking:**
+    *   **Voice Activity:** Awards points to moderators for time spent in designated voice channels.
+    *   **Poll Activity:** Automatically awards points when moderators create or participate in Discord polls.
+    *   **Inactivity Penalty:** Deducts points from moderators if they haven't earned any points within a 24-hour period.
+    *   **Weekly Improvement Bonus:** Awards bonus points to moderators whose weekly point total is higher than the previous week.
+    *   **Weekly Reports:** Sends a direct message to each moderator weekly summarizing their earned points.
+
+*   **Ban System:**
+    *   **Expiration Check:** Regularly checks for bans that have reached their expiration time, automatically unbanning the user in Discord and removing the ban record.
+    *   **Message Blocking:** Deletes messages sent by users who are currently banned within the server.
+    *   **Join Check:** If a user joins while having an active ban record, the bot reapplies channel restrictions.
+
+*   **Twitch Integration:**
+    *   **Stream Monitoring:** Periodically checks the status of linked Twitch channels.
+    *   **Live Role & Notification:** When a linked user goes live, the bot assigns the "Live on Twitch" role and sends a notification message to the configured channel. It removes the role when the stream ends.
+
+*   **Giveaway Management:**
+    *   **End Check:** Monitors active giveaways and automatically ends them when their duration expires, selecting winners and updating the giveaway message.
+    *   **Time Update:** Periodically updates the "Time Remaining" display on active giveaway embeds.
+
+*   **Welcome Messages:**
+    *   Sends a customizable welcome message and/or image to a designated channel when a new member joins the server.
+
+*   **Announcements:**
+    *   Listens for messages sent by administrators in the designated announcement channel, automatically formats them into embeds, and optionally DMs them to server members (respecting opt-outs).
+
+*   **Server Logging:**
+    *   Listens for various server events (member join/leave/update, message edit/delete, role changes, channel changes, etc.) and logs them to a designated channel if enabled.
+
+*   **Auto-Assign Roles:**
+    *   Handles button clicks or dropdown selections on role-assignment messages to add/remove roles.
+    *   Listens for direct messages containing verification proof (screenshots/stats) in response to role verification requests.
+
+*   **Message Acknowledgment:**
+    *   Monitors DMs sent via the `/message` command for a specific reaction (`✅`) to confirm the user has seen it, logging the acknowledgment.
+
+*   **Warning Acknowledgment:**
+    *   Periodically checks if users have acknowledged warnings that require it, potentially sending reminders.
+
+---
+
 ## Contact
 
 Discord: Jakubi.
