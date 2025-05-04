@@ -1,0 +1,40 @@
+# Environment variables
+.env
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+logs/
+
+# JSON data files that may contain sensitive information
+active_giveaways.json
+twitch_links.json
+twitch_settings.json
+warnings_data.json
+guild_settings.json
+ticket_config.json
+message_data.json
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,13 @@
+{
+  "example_guild_id": {
+    "example_giveaway_id": {
+      "message_id": 123456789012345678,
+      "channel_id": 123456789012345678,
+      "prize": "Example Prize",
+      "end_time": 1714842691,
+      "winners": 1,
+      "host_id": 123456789012345678,
+      "participants": []
+    }
+  }
+}

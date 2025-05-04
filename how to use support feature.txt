@@ -1,0 +1,20 @@
+Command Setup Instructions
+After adding this file to your project:
+
+Start the bot and use /setup to enable the "Ticket System" feature
+Use /ticket in the channel where you want the ticket panel to appear
+Use /transcripts in the channel where you want ticket transcripts and feedback to be sent
+How It Works
+Initialization: The system loads previous configuration on startup
+Panel Creation: Admins use /ticket to create a ticket panel with all options
+User Flow:
+Users select a ticket category from the dropdown
+For general/bot questions, a modal collects their question
+Tickets create a private channel with proper permissions
+Support Process:
+Support staff and the user communicate in the ticket channel
+Anyone can close the ticket with the close button
+Closure & Feedback:
+When closed, a transcript is created and saved
+The user receives a DM asking for feedback (rating + comments)
+Feedback is posted to the transcript channel

@@ -1,0 +1,7 @@
+missing:
+logs_-> role change ignore if done by bot, show images provided by autoassign role, deleted/edited messages -> make sure to show user(clicable), deleted log get's reposted and mentioned admins that user X delete log Y, 
+_casino_-levelingsystem_> use EXP system as "cash" and leaderboard with rewards?
+
+
+
+

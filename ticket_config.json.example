@@ -1,0 +1,7 @@
+{
+  "example_guild_id": {
+    "ticket_channel": 123456789012345678,
+    "ticket_message": 123456789012345679,
+    "transcript_channel": 123456789012345680
+  }
+}
